@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv'
+import cors from "cors"
 import express from "express"
 
 dotenv.config()
@@ -10,7 +11,8 @@ const app = express()
 
 
 //middleware
-
+app.use(cors())
+app.use(express.json())
 
 
 
