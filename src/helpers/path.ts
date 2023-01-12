@@ -1,11 +1,9 @@
-import path from "path"
+import path from "path";
 
+export const createPath = (...paths: string[]): string => {
+	const baseDirectory = __dirname.split("\\");
+	baseDirectory.pop();
+	baseDirectory.pop();
 
-
-export const createPath = (...paths:string[]):string => {
-  const baseDirectory = __dirname.split("/")
-  baseDirectory.push()
-
-  return path.join(...baseDirectory,...paths)
-}
-
+	return path.join(...baseDirectory, ...paths);
+};

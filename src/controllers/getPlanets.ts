@@ -3,7 +3,7 @@ import Planet from "../models/planets"
 
 export const  getPlanets:RequestHandler=async (req,res,next)=> {
   //TODO get planets from the db and return data to the client
-  const planets = await Planet.getPlanet  
+  const planets = await Planet.getPlanets()
   res.status(200).json(planets)
 }
 

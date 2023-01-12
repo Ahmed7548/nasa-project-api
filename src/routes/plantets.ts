@@ -5,4 +5,9 @@ import {getPlanets} from "../controllers/getPlanets"
 const planetRouter = Router()
 
 
-planetRouter.get("/",getPlanets)
+planetRouter.get("/", getPlanets)
+
+
+
+
+export default planetRouter
