@@ -4,32 +4,6 @@ import { openDb } from "./db";
 
 import { createPath } from "../helpers/path";
 
-// class IsHabitable extends Transform {
-// 	constructor(options?: TransformOptions) {
-// 		super(options);
-// 	}
-// 	async _transform(
-// 		planet: { [key: string]: any },
-// 		encoding: BufferEncoding,
-// 		callback: TransformCallback
-// 	): Promise<void> {
-// 		if (
-// 			planet["koi_disposition"] === "CONFIRMED" &&
-// 			planet["koi_insol"] > 0.36 &&
-// 			planet["koi_insol"] < 1.11 &&
-// 			planet["koi_prad"] < 1.6
-// 		) {
-// 			const db = await openDb();
-// 			await db.exec(
-// 				`	INSERT INTO Planets (kepid, NAME) VALUES ('${planet.kepid}', '${planet.kepoi_name}');`
-// 			);
-// 			await db.close();
-// 			callback(null);
-// 		}
-// 		callback(null);
-// 	}
-// }
-
 export default async () => {
 	const records: any[] = [];
 	createReadStream(createPath("csv", "kepler_data.csv"))
@@ -48,6 +22,14 @@ export default async () => {
 				NAME TEXT NOT NULL
 				);
 				`);
+				await db.exec(`create table if not exists Launches (
+					ID INTEGER PRIMARY KEY AUTOINCREMENT,
+					date TEXT NOT NULL,
+					name TEXT NOT NULL,
+					rocketType TEXR NOT NULL,
+					destination INTEGER,
+					FOREIGN KEY(destination) REFERENCES Planets(ID)
+				)`);
 				await db.exec(`BEGIN TRANSACTION;
 			${records
 				.map(
