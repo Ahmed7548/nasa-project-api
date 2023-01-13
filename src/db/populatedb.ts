@@ -19,13 +19,14 @@ export default async () => {
 				await db.exec(`CREATE TABLE Planets(
 				ID INTEGER PRIMARY KEY AUTOINCREMENT,
 				kepid INT NOT NULL,
-				NAME TEXT NOT NULL
+				name TEXT NOT NULL
 				);
 				`);
+				await db.exec("DROP TABLE IF EXISTS Launches;");
 				await db.exec(`create table if not exists Launches (
 					ID INTEGER PRIMARY KEY AUTOINCREMENT,
 					date TEXT NOT NULL,
-					name TEXT NOT NULL,
+					name TEXT UNIQUE NOT NULL,
 					rocketType TEXR NOT NULL,
 					destination INTEGER,
 					FOREIGN KEY(destination) REFERENCES Planets(ID)
@@ -34,7 +35,7 @@ export default async () => {
 			${records
 				.map(
 					(record) =>
-						`	INSERT INTO Planets (kepid, NAME) VALUES ('${record.kepid}', '${record.kepoi_name}');`
+						`	INSERT INTO Planets (kepid, NAME) VALUES ('${record.kepid}', '${record.kepler_name}');`
 				)
 				.join("\n")}
 			COMMIT;`);

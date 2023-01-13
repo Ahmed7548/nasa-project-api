@@ -16,11 +16,13 @@ export const postLaunch: RequestHandler<any, any, ReqBody> = async (
 
 	const launch = new Launch(date, name, rocketType, destination);
 
-	const id = await launch.save();
+	const response = await launch.save();
 
-	if (id) {
-		res.status(200).json({ id });
+	if (response.saved) {
+			res.status(200).json({ id:response.id });
+		return;
+	} else {
+		res.status(response.satus).json({message:response.message})
 		return;
 	}
-	res.status(500).json({ error: "couldn't save to data base" });
 };
