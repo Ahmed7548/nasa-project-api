@@ -22,6 +22,14 @@ export default async () => {
 				NAME TEXT NOT NULL
 				);
 				`);
+				await db.exec(`create table if not exists Launches (
+					ID INTEGER PRIMARY KEY AUTOINCREMENT,
+					date TEXT NOT NULL,
+					name TEXT NOT NULL,
+					rocketType TEXR NOT NULL,
+					destination INTEGER,
+					FOREIGN KEY(destination) REFERENCES Planets(ID)
+				)`);
 				await db.exec(`BEGIN TRANSACTION;
 			${records
 				.map(
