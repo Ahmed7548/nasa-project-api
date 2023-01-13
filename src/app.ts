@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import populatedb from "./db/populatedb";
 import planetRouter from "./routes/plantets";
+import launchesRouter from "./routes/launches";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // routes
 app.use("/planets", planetRouter);
+app.use("/launch", launchesRouter);
 
 //error handlers
 
