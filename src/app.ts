@@ -4,6 +4,7 @@ import express from "express";
 import populatedb from "./db/populatedb";
 import planetRouter from "./routes/plantets";
 import launchesRouter from "./routes/launches";
+import { createPath } from "./helpers/path";
 
 dotenv.config();
 
@@ -12,11 +13,14 @@ const app = express();
 //middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static(createPath("public", "build")));
 
 // routes
-app.use("/planets", planetRouter);
-app.use("/launch", launchesRouter);
-
+app.use("/api/planets", planetRouter);
+app.use("/api/launch", launchesRouter);
+app.get("/*", (req, res, next) => {
+	res.sendFile(createPath("public", "build", "index.html"));
+});
 //error handlers
 
 // app start

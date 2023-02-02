@@ -9,7 +9,6 @@ if (!fs.existsSync('./database.db')) {
 
 // you would have to import / invoke this in another file
 export async function openDb () {
-  console.log(__dirname)
   return open({
     filename: 'database.db',
     driver: sqlite3.Database

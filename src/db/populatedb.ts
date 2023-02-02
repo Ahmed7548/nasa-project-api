@@ -6,23 +6,21 @@ import { createPath } from "../helpers/path";
 
 export default async () => {
 	const records: any[] = [];
-	createReadStream(createPath("csv", "kepler_data.csv"))
+	createReadStream(createPath("public","csv", "kepler_data.csv"))
 		.pipe(parse({ comment: "#", columns: true }))
 		.on("data", (record) => {
 			if (isHabitable(record)) records.push(record);
 		})
 		.on("end", async () => {
 			const db = await openDb();
-			// console.log(records[0])
 			try {
 				await db.exec("DROP TABLE IF EXISTS Planets;");
-				await db.exec(`CREATE TABLE Planets(
+				await db.exec(`create table if not exists Planets(
 				ID INTEGER PRIMARY KEY AUTOINCREMENT,
 				kepid INT NOT NULL,
 				name TEXT NOT NULL
 				);
 				`);
-				await db.exec("DROP TABLE IF EXISTS Launches;");
 				await db.exec(`create table if not exists Launches (
 					ID INTEGER PRIMARY KEY AUTOINCREMENT,
 					date TEXT NOT NULL,
@@ -40,10 +38,8 @@ export default async () => {
 				.join("\n")}
 			COMMIT;`);
 			} catch (err) {
-				console.log(err);
+				console.error(err);
 			} finally {
-				const data = await db.all("select * from Planets");
-				console.log(data);
 				db.close();
 			}
 		})
