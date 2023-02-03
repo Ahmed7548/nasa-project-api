@@ -10,7 +10,7 @@ export const validate = (schema:z.ZodSchema):RequestHandler => (req, res, next) 
     req.body=schema.parse(req.body)
   } catch (err){
     if (err instanceof z.ZodError) {
-      res.status(400).json({error:err.message})
+      res.status(400).json({error:err})
     }
   }
 }

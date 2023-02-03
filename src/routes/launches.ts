@@ -2,6 +2,8 @@ import { Router } from "express";
 import { deleteLaunche } from "../controllers/deleteLaunch";
 import { getLaunches } from "../controllers/getLaunch";
 import { postLaunch } from "../controllers/postLaunch";
+import { validate } from "../middlewares/schemaValidator";
+import { PostLaunchSchema } from "../schemas/postLaunch";
 
 
 const launchesRouter = Router()
@@ -9,7 +11,7 @@ const launchesRouter = Router()
 
 
 launchesRouter.get("/",getLaunches)
-launchesRouter.post("/",postLaunch)
+launchesRouter.post("/",validate(PostLaunchSchema),postLaunch)
 launchesRouter.delete("/",deleteLaunche)
 
 
