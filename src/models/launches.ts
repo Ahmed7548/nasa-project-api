@@ -14,7 +14,7 @@ class Launch {
 		private date: string,
 		private name: string,
 		private rocketType: string,
-		private destination: number
+		private destination: string
 	) {}
 
   async save(): Promise<{
