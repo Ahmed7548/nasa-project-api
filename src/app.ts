@@ -32,7 +32,8 @@ app.get("/*", (req, res, next) => {
 //error handlers
 
 // app start
-app.listen(process.env.PORT, () => {
+export default app.listen(process.env.PORT, () => {
 	populatedb();
 	console.log("app is running on port " + process.env.PORT);
 });
+
