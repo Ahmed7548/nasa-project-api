@@ -1,11 +1,17 @@
 import { RequestHandler } from "express";
+import { CustomRequestHandler } from "../types";
 import Launch from "../models/launches";
+import HttpError from "../errors/HttpError";
 
 interface ReqBody {
 	id: number;
 }
 
-export const deleteLaunche: RequestHandler<any, any, ReqBody> = async (
+interface Response {
+	message:string
+}
+
+export const deleteLaunche: CustomRequestHandler<Response, ReqBody> = async (
 	req,
 	res,
 	next
@@ -13,8 +19,8 @@ export const deleteLaunche: RequestHandler<any, any, ReqBody> = async (
 	const { id } = req.body;
 
 	if (await Launch.delete(id)) {
-		res.status(200).json({ msg: "launch aborted" });
+		res.status(200).json({ message: "launch aborted successfully" });
 		return;
 	}
-	res.status(400).json({ msg: "there is no launch with that id" });
+	next(new HttpError(400,"there is no launch with that id"))
 };

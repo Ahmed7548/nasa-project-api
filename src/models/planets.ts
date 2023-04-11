@@ -1,12 +1,12 @@
 import { openDb } from "../db/db";
 
-interface Planet {
+export interface Planet {
 	ID: number;
 	kepid: number;
 	name: string;
 }
 
-class Planet {
+class PlanetC {
 	constructor() {}
 
 	static async getPlanets(): Promise<Planet[]> {
@@ -25,4 +25,4 @@ class Planet {
 	}
 }
 
-export default Planet;
+export default PlanetC;
