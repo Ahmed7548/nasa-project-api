@@ -1,16 +1,15 @@
 import { z } from "zod"
-import { RequestHandler } from "express"
+import { CustomRequestHandler } from "../types"
 
 
 
-
-export const validate = (schema:z.ZodSchema):RequestHandler => (req, res, next) => {
+export const validate = (schema:z.ZodSchema):CustomRequestHandler<never> => (req, res, next) => {
   // todo->validating
   try {
     req.body=schema.parse(req.body)
   } catch (err){
     if (err instanceof z.ZodError) {
-      res.status(400).json({error:err})
+      res.status(400).json({message:err.message})
     }
   }
 }
