@@ -1,7 +1,7 @@
 import { openDb } from "../db/db";
 
 
-interface DbLaunch {
+export interface DbLaunch {
 	ID: number;
 	date: string;
 	name: string;
