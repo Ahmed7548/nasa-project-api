@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 
  export type ErrorResponse={
   message: string;
-  code?: number;
+  err?: any;
 
 }
 export type ResType<T> = T | ErrorResponse

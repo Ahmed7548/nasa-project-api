@@ -6,6 +6,8 @@ import populatedb from "./db/populatedb";
 import planetRouter from "./routes/plantets";
 import launchesRouter from "./routes/launches";
 import { createPath } from "./helpers/path";
+import cluster from "cluster";
+import { errorHander } from "./errors/errorHandler";
 
 dotenv.config();
 
@@ -28,12 +30,16 @@ app.get("/*", (req, res, next) => {
 });
 
 
+app.use(errorHander)
+
 
 //error handlers
 
 // app start
 export default app.listen(process.env.PORT, () => {
-	populatedb();
+	if (process.env.NODE_APP_INSTANCE === '0') {
+   populatedb();
+}
 	console.log("app is running on port " + process.env.PORT);
 });
 

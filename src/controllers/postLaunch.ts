@@ -13,7 +13,7 @@ export const postLaunch: CustomRequestHandler<any, LaunchData> = async (
 
 
 	const launch = new Launch(date, name, rocketType, destination);
-
+	console.log(launch)
 	const response = await launch.save();
 
 	if (response.saved) {
