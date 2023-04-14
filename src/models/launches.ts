@@ -24,9 +24,10 @@ class Launch {
     saved: false;
     satus: number;
     message:string
-  }> {
-    try{
+	}> {
 		const db = await openDb();
+    try{
+
 		const result = await db.run(
 			`INSERT INTO Launches (date, name, rocketType, destination) VALUES (?, ?, ?, ?)`,
 			this.date,
@@ -43,13 +44,14 @@ class Launch {
         satus: 500,
         message:"couldn't save to data base"
       };
-    } catch (err) {
+		} catch (err) {
+			console.log(err,err instanceof Error)
       if (err instanceof Error) {
         return {
         saved: false,
         satus: 400,
         message:err.message 
-      }
+				}
       } else {
         return {
           saved: false,
@@ -58,7 +60,9 @@ class Launch {
         }
       }
       
-    }
+		} finally {
+			db.close()
+		}
 	}
 	static async delete(id: number): Promise<boolean> {
 		const db = await openDb();
